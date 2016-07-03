@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="lib/angular-material/angular-material.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+<script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+  <script src="js/ng-cordova.min.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+  <script src="lib/angular-animate/angular-animate.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/angular-aria/angular-aria.js"></script>
+  <script src="lib/angular-material/angular-material.js"></script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
+
+</head>
+
+<body ng-app="starter" ng-cloak="" ng-controller="mainController">
+
+
+  <ion-side-menus>
+    <ion-side-menu-content drag-content="false" ng-controller="AppCtrl" layout-fill="" flex="">
+
+      <!--the toolbar-->
+      <md-toolbar class="fixed md-whiteframe-z2" layout="column">
+        <div class="md-toolbar-tools" data-ng-show="showMobileMainHeader">
+         <md-button class="md-icon-button" ng-click="toggleSidenav()"><md-icon>menu</md-icon></md-button>
+          <span style="margin-left: 10px">Minimal Movie Reviews</span>
+          <span flex=""></span>
+          <md-button class="md-icon-button" aria-label="Search" data-ng-click="showMobileMainHeader = false">
+            <md-icon class="material-icons">&#xE8B6;</md-icon>
+          </md-button>
+        </div>
+        <div class="md-toolbar-tools" data-ng-hide="showMobileMainHeader">
+          <md-button class="md-icon-button" aria-label="Back" data-ng-click="showMobileMainHeader = true" >
+
+            <md-icon class="material-icons" ng-click="clearsearch()">&#xE5C4;</md-icon>
+          </md-button>
+          <md-input-container md-autofocus="" md-no-float="" class="md-accent" style="padding-top: 30px; width:85%">
+            <input ng-model="movieFilter.Name" placeholder="Search movies, keywords..." style="color:#f0f0f0;">
+          </md-input-container>
+
+        </div>
+      </md-toolbar>
+
+      <!--navigation drawer-->
+      <div layout="row" layout-fill="" flex="">
+
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2 SideNavBg" md-component-id="nav">
+
+          <!--contents of the navigation bar-->
+          <md-toolbar class="fixed " layout="column">
+            <div class="md-toolbar-tools" data-ng-show="showMobileMainHeader">
+            <span flex=""></span>
+              <md-button class="md-icon-button" ng-click="toggleSidenav()"><md-icon>close</md-icon></md-button>
+
+              </div>
+
+          </md-toolbar>
+
+                <div class="list" style="background-color: #373a43;">
+                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
+                    <img src="img/bollywood.png">
+                    <div class="ListItem">Bollywood</div>
+                  </a>
+
+
+
+                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
+                    <img src="img/hollywood.png">
+                    <div class="ListItem">Hollywood</div>
+                  </a>
+
+
+                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
+                    <img src="img/bookmark.png">
+                    <div class="ListItem">Bookmarks</div>
+                  </a>
+
+
+                  <div ng-init="showMenu=false">
+                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-click="showMenu=!showMenu">
+                    <img src="img/settings.png">
+                    <div class="ListItem">Settings <md-icon ng-show="!showMenu" style="color: #ffffff;">arrow_drop_down</md-icon>
+                      <md-icon ng-show="showMenu" style="color: #ffffff;">arrow_drop_up</md-icon>
+                    </div>
+
+                  </a>
+
+                    <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
+                      <h3 class="ListItem"><md-icon style="color: #ffffff;">info_outline</md-icon>&#xA0;&#xA0;&#xA0;About</h3>
+                    </a>
+                    <a class="item item-avatar SideNav" href="https://www.facebook.com/minimalmoviereviews" md-ink-ripple="" ng-show="showMenu">
+                      <h3 class="ListItem"><md-icon style="color: #ffffff;">group_add</md-icon>&#xA0;&#xA0;&#xA0;Invite Friends</h3>
+                    </a>
+                    <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
+                      <h3 class="ListItem"><md-icon style="color: #ffffff;">feedback</md-icon>&#xA0;&#xA0;&#xA0;Feedback</h3>
+                    </a>
+                    </div>
+                </div>
+
+
+
+        </md-sidenav>
+
+
+      <ion-slides options="{pagination:&apos;false&apos;}">
+
+        <!--movieinfos is an array that contains the information about each movies as an object-->
+        <ion-slide-page ng-repeat="movieinfo in movieinfos | filter: movieFilter">
+          <!--Card Content-->
+          <ion-content>
+            <div class="card ">
+              <div class="item item-image">
+                <img ng-src="{{movieinfo.Image}}">
+              </div>
+
+              <div class="item item-body">
+
+                <h1 class="movie-title">{{movieinfo.Name}}</h1>
+                <a href="#" ng-click="traileropen(movieinfo.Trailer)" class="ion-social-youtube-outline video-icon"></a>
+
+                <div class="movie-info">
+                  <span class="movie-year">{{movieinfo.Year}}</span> &#x25CF; <span>{{movieinfo.Genre}}</span>
+                </div>
+                <p class="content">
+                  {{movieinfo.Review}}
+                </p>
+              </div>
+
+              <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                  <i class="icon ion-heart"></i> Love
+                </a>
+                <a class="tab-item" href="#" ng-click="shareAnywhere(movieinfo)">
+                  <i class="icon ion-android-share"></i> Share
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-bookmark"></i> Bookmark
+                </a>
+              </div>
+
+            </div>
+
+          </ion-content>
+        </ion-slide-page>
+      </ion-slides>
+      </div>
+    </ion-side-menu-content>
+  </ion-side-menus>
+
+</body>
+
+</html>
+
+
+<!--Notes
+The search feature needs to be implemented. Try using a nav-bar instead of a header bar as above
+If you can then get a css developer and try to change some of these base styles. Make it look like
+it's not purely made with ionic.
+-->

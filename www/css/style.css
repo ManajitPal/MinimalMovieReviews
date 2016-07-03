@@ -1,0 +1,101 @@
+/* Empty. Add your own CSS if you like */
+body {
+  font-family: 'Roboto',sans-serif;
+
+
+}
+
+.custom-icon {
+  color:#EF473A;
+}
+
+.custom-margin {
+  margin-top:40px;
+}
+
+
+.light {
+  font-weight:100;
+}
+
+.custom {
+  border: none;
+}
+
+.custom.activated {
+  border-color: none;
+  background-color: none;
+}
+
+.movie-info {
+  font-size:15px;
+}
+
+h1.movie-title {
+  margin:0;
+  display:inline-block;
+  color: #252b4d;
+}
+
+.movie-year {
+
+  color: #212121;
+  font-weight: bold ;
+}
+
+a.video-icon {
+  font-size:30px;
+  margin-top:10px;
+  margin-left:10px;
+}
+
+input.custom-field {
+  margin-left:20px;
+  width:100%;
+  font-size:20px;
+  padding:10px;
+}
+
+md-toolbar.fixed {
+  position: fixed;
+}
+md-toolbar.fixed + * {
+  padding-top: 64px;
+}
+
+.SideNav{
+  background-color: #373a43;
+  border-color: #373a43;
+}
+.SideNav:active{
+  background-color: #1b1c21;
+  border-color: #1b1c21;
+}
+.SideNav a:active{
+  background-color: #1b1c21;
+  border-color: #1b1c21;
+}
+.SideNav a{
+  background-color: #373a43;
+  border-color: #373a43;
+}
+.SideNavBg{
+  background-color: #26262e;
+  border-color: #26262e;
+}
+
+.ListItem{
+  color: #ffffff;
+  padding-top: 10px;
+  font-weight: 300;
+
+}
+
+
+md-sidenav,
+md-sidenav.md-locked-open,
+md-sidenav.md-closed.md-locked-open-add-active {
+  min-width: 200px !important;
+  width: 250px !important;
+  max-width: 400px !important;
+}
