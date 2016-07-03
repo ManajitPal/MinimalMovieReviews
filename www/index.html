@@ -65,7 +65,7 @@
       </md-toolbar>
 
       <!--navigation drawer-->
-      <div layout="row" layout-fill="" flex="">
+      <div layout="row" layout-fill="" flex="" style="background-color: #f0f0f0">
 
         <md-sidenav class="md-sidenav-left md-whiteframe-z2 SideNavBg" md-component-id="nav">
 
@@ -125,7 +125,7 @@
         </md-sidenav>
 
 
-      <ion-slides options="{pagination:&apos;false&apos;}">
+      <ion-slides options="{pagination:&apos;false&apos;}" >
 
         <!--movieinfos is an array that contains the information about each movies as an object-->
         <ion-slide-page ng-repeat="movieinfo in movieinfos | filter: movieFilter">
