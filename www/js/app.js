@@ -57,7 +57,7 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
     fields = snapshot.val();
 
     $scope.movieinfos.push(fields);
-    
+
     window.localStorage.push("moviecache", JSON.stringify(movieinfos));
 
   },function(errorObject){
@@ -87,6 +87,7 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
     $scope.toggleSidenav = function () {
 
       $mdSidenav('nav').toggle();
+      
     };
     $scope.showMobileMainHeader = true;
 
