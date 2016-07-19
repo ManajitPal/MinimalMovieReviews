@@ -1,6 +1,6 @@
 (function(){
 
-var app = angular.module('starter', ['ionic','ionic.service.core','firebase','ngMaterial','ngAnimate','ngCordova'])
+var app = angular.module('starter', ['ionic','ionic.service.core','firebase','ngMaterial','ngAnimate','ngCordova','ngStorage'])
 
 
 //There is an issue with the slider check the console and try to debug it.
@@ -42,14 +42,14 @@ app.run(function($ionicPlatform) {
   });
 })
 
-app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSharing){
+app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSharing, $localStorage){
 
   var ref = new Firebase('https://minimal-movie-reviews.firebaseio.com/');
 
    $scope.movieinfos = [];
 
    var fields = $firebaseArray(ref);
-
+    $scope.$storage = $localStorage;
 
 //reading data from the firebase database
   ref.on("child_added",function(snapshot,prevChildKey){
@@ -57,7 +57,8 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
     fields = snapshot.val();
 
     $scope.movieinfos.push(fields);
-    window.localStorage.setItem("moviecache", JSON.stringify(fields));
+    
+    window.localStorage.push("moviecache", JSON.stringify(movieinfos));
 
   },function(errorObject){
 
@@ -76,6 +77,8 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
   //social sharing using ng-cordova
   $scope.shareAnywhere = function(shareMovie) {
     $cordovaSocialSharing.share(JSON.stringify(shareMovie));
+
+
   }
 
 })
@@ -86,10 +89,8 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
       $mdSidenav('nav').toggle();
     };
     $scope.showMobileMainHeader = true;
-    $scope.clearsearch= function () {
-      $scope.movieinfos = null;
-    }
-    
+
+
 
   }]);
 

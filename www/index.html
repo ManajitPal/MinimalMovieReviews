@@ -24,6 +24,7 @@
   <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
   <script src="lib/angular-animate/angular-animate.js"></script>
   <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/ngstorage/ngStorage.min.js"></script>
   <script src="lib/angular-aria/angular-aria.js"></script>
   <script src="lib/angular-material/angular-material.js"></script>
 
@@ -53,9 +54,9 @@
           </md-button>
         </div>
         <div class="md-toolbar-tools" data-ng-hide="showMobileMainHeader">
-          <md-button class="md-icon-button" aria-label="Back" data-ng-click="showMobileMainHeader = true" >
+          <md-button class="md-icon-button" aria-label="Back" data-ng-click="showMobileMainHeader = true; movieFilter.Name = ''"  >
 
-            <md-icon class="material-icons" ng-click="clearsearch()">&#xE5C4;</md-icon>
+            <md-icon class="material-icons"  >&#xE5C4;</md-icon>
           </md-button>
           <md-input-container md-autofocus="" md-no-float="" class="md-accent" style="padding-top: 30px; width:85%">
             <input ng-model="movieFilter.Name" placeholder="Search movies, keywords..." style="color:#f0f0f0;">
@@ -78,35 +79,37 @@
               </div>
 
           </md-toolbar>
-
-                <div class="list" style="background-color: #373a43;">
-                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
-                    <img src="img/bollywood.png">
-                    <div class="ListItem">Bollywood</div>
-                  </a>
+          <md-list style="background-color: #373a43;">
+            <md-list-item  md-ink-ripple="">
 
 
-
-                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
-                    <img src="img/hollywood.png">
-                    <div class="ListItem">Hollywood</div>
-                  </a>
+                    <img class="md-avatar" ng-src="img/bollywood.png">
+                    <span class="ListItem" >Bollywood</span>
 
 
-                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="">
-                    <img src="img/bookmark.png">
-                    <div class="ListItem">Bookmarks</div>
-                  </a>
+            </md-list-item>
+
+            <md-list-item  md-ink-ripple="">
+                    <img class="md-avatar" ng-src="img/hollywood.png">
+                    <span class="ListItem">Hollywood</span>
+              </md-list-item>
 
 
-                  <div ng-init="showMenu=false">
-                  <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-click="showMenu=!showMenu">
-                    <img src="img/settings.png">
-                    <div class="ListItem">Settings <md-icon ng-show="!showMenu" style="color: #ffffff;">arrow_drop_down</md-icon>
+            <md-list-item  md-ink-ripple="">
+                    <img class="md-avatar" ng-src="img/bookmark.png">
+                    <span class="ListItem">Bookmarks</span>
+              </md-list-item>
+
+
+
+                  <md-list-item  ng-init="showMenu=false" md-ink-ripple="" ng-click="showMenu=!showMenu">
+
+                    <img class="md-avatar" ng-src="img/settings.png">
+                      <span class="ListItem">Settings <md-icon ng-show="!showMenu" style="color: #ffffff;">arrow_drop_down</md-icon>
                       <md-icon ng-show="showMenu" style="color: #ffffff;">arrow_drop_up</md-icon>
-                    </div>
+                    </span>
 
-                  </a>
+                    </md-list-item>
 
                     <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
                       <h3 class="ListItem"><md-icon style="color: #ffffff;">info_outline</md-icon>&#xA0;&#xA0;&#xA0;About</h3>
@@ -117,11 +120,13 @@
                     <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
                       <h3 class="ListItem"><md-icon style="color: #ffffff;">feedback</md-icon>&#xA0;&#xA0;&#xA0;Feedback</h3>
                     </a>
-                    </div>
-                </div>
 
 
 
+
+
+
+          </md-list>
         </md-sidenav>
 
 

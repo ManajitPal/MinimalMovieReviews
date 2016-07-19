@@ -71,14 +71,11 @@ md-toolbar.fixed + * {
   background-color: #1b1c21;
   border-color: #1b1c21;
 }
-.SideNav a:active{
-  background-color: #1b1c21;
-  border-color: #1b1c21;
-}
-.SideNav a{
+.SideNav:hover{
   background-color: #373a43;
   border-color: #373a43;
 }
+
 .SideNavBg{
   background-color: #26262e;
   border-color: #26262e;
@@ -86,8 +83,24 @@ md-toolbar.fixed + * {
 
 .ListItem{
   color: #ffffff;
-  padding-top: 10px;
+  padding-top: 5px;
+  font-size: 17px;
   font-weight: 300;
+
+}
+.ExtendedList{
+  color: #ffffff;
+  padding-top: 5px;
+  font-size: 14px;
+  font-weight: 300;
+
+}
+
+.ExtendedIcon{
+
+  width: 10px;
+  height: 10px;
+
 
 }
 
