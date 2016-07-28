@@ -1,6 +1,6 @@
 (function(){
 
-var app = angular.module('starter', ['ionic','ionic.service.core','firebase','ngMaterial','ngAnimate','ngCordova','ngStorage'])
+var app = angular.module('starter', ['ionic','ionic.service.core','firebase','ngMaterial','ngAnimate','ngCordova', 'LocalStorageModule'])
 
 
 //There is an issue with the slider check the console and try to debug it.
@@ -19,6 +19,25 @@ var app = angular.module('starter', ['ionic','ionic.service.core','firebase','ng
 //   // });
 // })
 
+  app.config(function (localStorageServiceProvider) {
+    localStorageServiceProvider
+      .setPrefix('todo');
+  });
+
+  app.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: 'pages/home.html'
+      })
+      .state('bookmarks', {
+        url: '/bookmarks',
+        templateUrl: 'pages/bookmarks.html'
+      });
+
+    $urlRouterProvider.otherwise("/home");
+
+  });
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     var push = new Ionic.Push({
@@ -42,44 +61,70 @@ app.run(function($ionicPlatform) {
   });
 })
 
-app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSharing, $localStorage){
+app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSharing, localStorageService){
 
   var ref = new Firebase('https://minimal-movie-reviews.firebaseio.com/');
 
    $scope.movieinfos = [];
+  $scope.bookmarks = [];
+
+
 
    var fields = $firebaseArray(ref);
-    $scope.$storage = $localStorage;
+
 
 //reading data from the firebase database
   ref.on("child_added",function(snapshot,prevChildKey){
 
     fields = snapshot.val();
-
-    $scope.movieinfos.push(fields);
-
-    window.localStorage.push("moviecache", JSON.stringify(movieinfos));
+          $scope.movieinfos.push(fields);
 
   },function(errorObject){
 
     console.log("The read failed:" + errorObject.code);
   })
-  $scope.movieinfos.push(JSON.parse(window.localStorage.getItem("moviecache")));
+
+
 
 //for opening youtube links
   $scope.traileropen = function(trailer){
     window.open(trailer,'_system','location=yes');return false;
   }
-  $scope.click = false;
-  $scope.clicked = function(){
-    $scope.click = !$scope.click;
-  }
+
   //social sharing using ng-cordova
   $scope.shareAnywhere = function(shareMovie) {
     $cordovaSocialSharing.share(JSON.stringify(shareMovie));
+  }
 
+  //adding bookmark
+  $scope.addBookmark = function (addMovie) {
+    $scope.bookmarks.push(addMovie);
+    localStorageService.set("bookmarkedItem", $scope.bookmarks);
 
   }
+  //deleting bookmark
+  $scope.deleteBookmark = function (id) {
+    var bookmark = $scope.bookmarks[id];
+    $scope.bookmarks.splice(id, 1);
+    localStorageService.set("bookmarkedItem", $scope.bookmarks);
+    $scope.bookmarks = localStorageService.get("bookmarkedItem");
+
+  }
+
+
+  //Retrieving bookmarks
+
+  $scope.getBookmark = function () {
+
+    if (localStorageService.get("bookmarkedItem")) {
+      $scope.bookmarks = localStorageService.get("bookmarkedItem");
+    } else {
+      $scope.bookmarks = [];
+    }
+  }
+
+  
+  $scope.bookmarks = localStorageService.get("bookmarkedItem");
 
 })
 
@@ -87,8 +132,9 @@ app.controller('mainController',function($scope,$firebaseArray, $cordovaSocialSh
     $scope.toggleSidenav = function () {
 
       $mdSidenav('nav').toggle();
-      
+
     };
+
     $scope.showMobileMainHeader = true;
 
 

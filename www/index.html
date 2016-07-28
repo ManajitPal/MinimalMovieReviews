@@ -24,7 +24,7 @@
   <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
   <script src="lib/angular-animate/angular-animate.js"></script>
   <script src="lib/angular/angular.min.js"></script>
-  <script src="lib/ngstorage/ngStorage.min.js"></script>
+  <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
   <script src="lib/angular-aria/angular-aria.js"></script>
   <script src="lib/angular-material/angular-material.js"></script>
 
@@ -73,108 +73,78 @@
           <!--contents of the navigation bar-->
           <md-toolbar class="fixed " layout="column">
             <div class="md-toolbar-tools" data-ng-show="showMobileMainHeader">
-            <span flex=""></span>
+              <span flex=""></span>
 
               <md-button class="md-icon-button" ng-click="toggleSidenav()"><md-icon>close</md-icon></md-button>
 
-              </div>
+            </div>
 
           </md-toolbar>
+
+
           <md-list style="background-color: #373a43;">
+            <a  style="text-decoration: none" ui-sref="home" > <md-list-item  md-ink-ripple="" ng-click="toggleSidenav()">
+
+              <img class="md-avatar" ng-src="img/home.png" >
+              <span class="ListItem">Now Running</span>
+
+            </md-list-item>
+
+            </a>
+
             <md-list-item  md-ink-ripple="">
-
-
-                    <img class="md-avatar" ng-src="img/bollywood.png">
-                    <span class="ListItem" >Bollywood</span>
-
-
+              <img class="md-avatar" ng-src="img/bollywood.png">
+              <span class="ListItem" >Bollywood</span>
             </md-list-item>
 
             <md-list-item  md-ink-ripple="">
                     <img class="md-avatar" ng-src="img/hollywood.png">
                     <span class="ListItem">Hollywood</span>
-              </md-list-item>
+            </md-list-item>
 
 
-            <md-list-item  md-ink-ripple="">
+            <a  style="text-decoration: none" ui-sref="bookmarks" > <md-list-item  md-ink-ripple="" ng-click="toggleSidenav()">
+
                     <img class="md-avatar" ng-src="img/bookmark.png">
                     <span class="ListItem">Bookmarks</span>
-              </md-list-item>
 
+            </md-list-item>
 
+            </a>
 
-                  <md-list-item  ng-init="showMenu=false" md-ink-ripple="" ng-click="showMenu=!showMenu">
+            <md-list-item  ng-init="showMenu=false" md-ink-ripple="" ng-click="showMenu=!showMenu">
 
-                    <img class="md-avatar" ng-src="img/settings.png">
-                      <span class="ListItem">Settings <md-icon ng-show="!showMenu" style="color: #ffffff;">arrow_drop_down</md-icon>
-                      <md-icon ng-show="showMenu" style="color: #ffffff;">arrow_drop_up</md-icon>
-                    </span>
+              <img class="md-avatar" ng-src="img/settings.png">
+              <span class="ListItem">Settings <md-icon ng-show="!showMenu" style="color: #ffffff;">arrow_drop_down</md-icon>
+                <md-icon ng-show="showMenu" style="color: #ffffff;">arrow_drop_up</md-icon>
+              </span>
+            </md-list-item>
 
-                    </md-list-item>
-
-                    <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
+            <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
                       <h3 class="ListItem"><md-icon style="color: #ffffff;">info_outline</md-icon>&#xA0;&#xA0;&#xA0;About</h3>
-                    </a>
-                    <a class="item item-avatar SideNav" href="https://www.facebook.com/minimalmoviereviews" md-ink-ripple="" ng-show="showMenu">
+            </a>
+            <a class="item item-avatar SideNav" href="https://www.facebook.com/minimalmoviereviews" md-ink-ripple="" ng-show="showMenu">
                       <h3 class="ListItem"><md-icon style="color: #ffffff;">group_add</md-icon>&#xA0;&#xA0;&#xA0;Invite Friends</h3>
-                    </a>
-                    <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
+            </a>
+            <a class="item item-avatar SideNav" href="#" md-ink-ripple="" ng-show="showMenu">
                       <h3 class="ListItem"><md-icon style="color: #ffffff;">feedback</md-icon>&#xA0;&#xA0;&#xA0;Feedback</h3>
-                    </a>
-
-
-
-
-
-
+            </a>
           </md-list>
         </md-sidenav>
 
 
-      <ion-slides options="{pagination:&apos;false&apos;}" >
 
-        <!--movieinfos is an array that contains the information about each movies as an object-->
-        <ion-slide-page ng-repeat="movieinfo in movieinfos | filter: movieFilter">
-          <!--Card Content-->
-          <ion-content>
-            <div class="card ">
-              <div class="item item-image">
-                <img ng-src="{{movieinfo.Image}}">
-              </div>
 
-              <div class="item item-body">
 
-                <h1 class="movie-title">{{movieinfo.Name}}</h1>
-                <a href="#" ng-click="traileropen(movieinfo.Trailer)" class="ion-social-youtube-outline video-icon"></a>
+          <!--movieinfos is an array that contains the information about each movies as an object-->
+        <ion-nav-view style="background-color: #f0f0f0"></ion-nav-view>
 
-                <div class="movie-info">
-                  <span class="movie-year">{{movieinfo.Year}}</span> &#x25CF; <span>{{movieinfo.Genre}}</span>
-                </div>
-                <p class="content">
-                  {{movieinfo.Review}}
-                </p>
-              </div>
 
-              <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#">
-                  <i class="icon ion-heart"></i> Love
-                </a>
-                <a class="tab-item" href="#" ng-click="shareAnywhere(movieinfo)">
-                  <i class="icon ion-android-share"></i> Share
-                </a>
-                <a class="tab-item" href="#">
-                  <i class="icon ion-bookmark"></i> Bookmark
-                </a>
-              </div>
-
-            </div>
-
-          </ion-content>
-        </ion-slide-page>
-      </ion-slides>
       </div>
     </ion-side-menu-content>
   </ion-side-menus>
+
+
 
 </body>
 
